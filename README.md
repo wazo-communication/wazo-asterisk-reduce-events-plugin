@@ -7,3 +7,9 @@ Reduce the number of events sent by Asterisk, reducing the total load on the sys
 ```sh
 wazo-plugind-cli -c "install git https://github.com/wazo-communication/wazo-asterisk-reduce-events-plugin"
 ```
+
+## Uninstallation
+
+```sh
+wazo-plugind-cli -c 'uninstall wazocommunication/wazo-asterisk-reduce-events'
+```
