@@ -1,0 +1,28 @@
+#!/bin/sh
+# Copyright 2024 The Wazo Authors  (see the AUTHORS file)
+# SPDX-License-Identifier: GPL-3.0+
+
+case "$1" in
+    build)
+        ;;
+
+    package)
+        ;;
+
+    install)
+        sed -i '/eventfilter = !Event: Newexten/a eventfilter = !Event: ExtensionStatus  ; wazo-asterisk-reduce-events-plugin' /etc/asterisk/manager.d/01-xivo.conf
+        asterisk -rx 'manager reload'
+        systemctl restart wazo-amid
+        ;;
+
+    uninstall)
+        sed -i '/eventfilter = !Event: ExtensionStatus  ; wazo-asterisk-reduce-events-plugin/d' /etc/asterisk/manager.d/01-xivo.conf
+        asterisk -rx 'manager reload'
+        systemctl restart wazo-amid
+        ;;
+
+    *)
+        echo "$0 called with unknown argument '$1'" >&2
+        exit 1
+    ;;
+esac
